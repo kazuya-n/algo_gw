@@ -2,12 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-//とりあえずTの最大文字数は100
-#define MAX_T 100
-//とりあえずSiの最大文字数は10
-#define MAX_S 10
-//とりあえずSiの個数は10個
-#define MAX_S_N 10
+#define MAX_T 500000
+#define MAX_S 500000
+#define MAX_S_N 500000
 
 char T [MAX_T];
 char S [MAX_S];
@@ -20,22 +17,29 @@ int BM (void);
 void BMinit(int *table,int  len);
 
 int main(void){
-    int i;
+    int i,j;
     int index=0;
+    int S_len = 0;
     //Tを読み込み
     scanf("%s",T);
     T_len = strlen(T);
     //Sを回数分読み込み
     //検索し結果を出力
-    for(i=0;i<MAX_S_N;i++){
-        scanf("%s",S);
+    for(;;i++){
+        if(scanf("%s",S)==EOF) break;
+        S_len = strlen(S);
+        if(S_len < 15) continue;
         index = BM();
         if(index != -1){
-            printf("%s is found at input string on %d\n",S,index);
+            //printf("%s is found at input string on %d\n",S,index);
+            for(j=0;j<S_len;j++){
+                T[j+index]=S[j];
+            }
         }else{
-            printf("%s is not found\n",S);
+            //printf("%s is not found\n",S);
         }
     }
+    printf("%s",T);
     return 0;
 }
 
@@ -50,7 +54,7 @@ void BMinit(int *table,int  len){
     }
     //デバッグ出力
     for(int i=0;i<len;i++){
-        printf("%c's slide count is %d\n",S[i],table[(int)S[i]]);
+        //printf("%c's slide count is %d\n",S[i],table[(int)S[i]]);
     }
     return;
 }
@@ -68,9 +72,9 @@ int BM(void){
     i=j=S_len-1;
     while((i<T_len)&&(j>=0)){
        //デバッグ
-       printf("checking T - %c: S - %c \n",T[i],S[j]);
+       //printf("checking T - %c: S - %c \n",T[i],S[j]);
        //同じかどうか
-       if(T[i]!=S[j]||T[i]!='x'){
+       if((T[i]!=S[j])&&(T[i]!='x')){
            //まずループ防止チェック
            //基本的にはずらし幅に対応する文字をテーブルから探す。
            remain = S_len - j;
