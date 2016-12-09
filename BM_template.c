@@ -1,6 +1,12 @@
-#include <stdio.h>
+#include<stdio.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include <stdlib.h>
 #include <string.h>
+
+/*usage
+ example:grpwk < data1_in >data1_out
+*/
 
 //とりあえずTの最大文字数は100
 #define MAX_T 500000
@@ -8,18 +14,39 @@
 #define MAX_S 150
 //とりあえずSiの個数は10個
 #define MAX_S_N 60000
-
+//元の文字列
 char T [MAX_T];
+//部分文字列
 char S [MAX_S];
 //Tの長さ
 int T_len;
-
 //BM法で探索する関数
 int BM (void);
 //BM法におけるずらし幅を決める関数
 void BMinit(int *table,int  len);
 
-int main(void){
+
+int main_prg(int, char**);
+
+int main(int argc, char** argv){
+
+  struct rusage u;
+  struct timeval start, end;
+  
+  getrusage(RUSAGE_SELF, &u);
+  start = u.ru_utime;
+  
+  main_prg(argc, argv);
+  
+  getrusage(RUSAGE_SELF, &u );
+  end = u.ru_utime;
+  
+  fprintf(stderr, "%lf\n", (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec)*1.0E-6);
+    
+  return(0);
+}
+
+int main_prg(int argc, char** argv){
     int i,j;
     int index=0;
     //Tを読み込み
@@ -39,13 +66,14 @@ int main(void){
             //printf("%s is not found\n",S);
         }
     }
-    //xが残ってたら消す
+    //xが残ってたらaで消す
     for(i=0;i<MAX_T;i++){
         if(T[i]=='x') T[i] = 'a';
     }
     printf("%s\n",T);
     return 0;
 }
+
 
 void BMinit(int *table,int  len){
     int i;
@@ -58,10 +86,10 @@ void BMinit(int *table,int  len){
     }
     //デバッグ出力
     /*
-    for(int i=0;i<len;i++){
-        printf("%c's slide count is %d\n",S[i],table[(int)S[i]]);
-    }
-    */
+     for(int i=0;i<len;i++){
+     printf("%c's slide count is %d\n",S[i],table[(int)S[i]]);
+     }
+     */
     return;
 }
 
@@ -77,26 +105,29 @@ int BM(void){
     //パターンSの末尾に検索位置を合わせる。
     i=j=S_len-1;
     while((i<T_len)&&(j>=0)){
-       //デバッグ
-       //printf("checking T - %c: S - %c \n",T[i],S[j]);
-       //同じかどうか
-       if(T[i]!=S[j]&&T[i]!='x'){
-           //まずループ防止チェック
-           //基本的にはずらし幅に対応する文字をテーブルから探す。
-           remain = S_len - j;
-           if(BM_table[(int)T[i]]>remain){
-               i += BM_table[(int)T[i]];
-           } else {
-               i += remain;
-           }
-           j = S_len-1;
-       } else {
-           i--;
-           j--;
-       }
+        //デバッグ
+        //printf("checking T - %c: S - %c \n",T[i],S[j]);
+        //1文字ずつ比較するところ
+        //xだったら無視して同じだった扱いにする。
+        if(T[i]!=S[j]&&T[i]!='x'){
+            //まずループ防止チェック
+            //基本的にはずらし幅に対応する文字をテーブルから探す。
+            remain = S_len - j;
+            if(BM_table[(int)T[i]]>remain){
+                i += BM_table[(int)T[i]];
+            } else {
+                i += remain;
+            }
+            j = S_len-1;
+        } else {
+            i--;
+            j--;
+        }
     }
     //見つかったらテキストの場所を返す。
     if(j<0) return i+1;
     //見つからなかったら-1を返す。
     return -1;
 }
+
+

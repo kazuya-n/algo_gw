@@ -1,13 +1,2 @@
-PROG = grpwk
-OBJS = template.o
-CC = gcc
-CFLAGS = -Wall
-
-.SUFFIXES: .c
-
-$(PROG): $(OBJS)
-	$(CC) -o $(PROG) $^
-.c.o:
-	$(CC) $(CFLAGS) -c $<
-clean:
-	rm  $(OBJS) $(PROG)
+grpwk : BM_template.c
+	gcc -o grpwk -O2 BM_template.c 

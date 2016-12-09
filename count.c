@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
     fscanf(fp1,"%s\n",a);
     fscanf(fp2,"%s\n",b);
     for(i=0;i<500000;i++){
-        if(a[i]!=b[i]) diff++;
+        if(a[i]==b[i]) diff++;
     }
     printf("%.3f",((double)diff/500000));
     return 0;

@@ -1,0 +1,63 @@
+A's slide count is 4
+A's slide count is 4
+B's slide count is 2
+x's slide count is 5
+B's slide count is 2
+x's slide count is 5
+x's slide count is 5
+A's slide count is 4
+B's slide count is 2
+B's slide count is 2
+X's slide count is 1
+C's slide count is 0
+AABxBxxABBXC is not found
+B's slide count is 1
+B's slide count is 1
+A's slide count is 0
+BBA is found at input string on 0
+A's slide count is 0
+B's slide count is 1
+B's slide count is 1
+A's slide count is 0
+ABBA is found at input string on 6
+C's slide count is 0
+C's slide count is 0
+CC is found at input string on 11
+B's slide count is 3
+B's slide count is 3
+B's slide count is 3
+A's slide count is 0
+C's slide count is 1
+A's slide count is 0
+BBBACA is found at input string on 14
+B's slide count is 0
+B's slide count is 0
+B's slide count is 0
+B's slide count is 0
+B's slide count is 0
+B's slide count is 0
+B's slide count is 0
+BBBBBBB is not found
+A's slide count is 0
+A's slide count is 0
+C's slide count is 1
+A's slide count is 0
+AACA is found at input string on 18
+B's slide count is 0
+B's slide count is 0
+A's slide count is 1
+B's slide count is 0
+BBAB is found at input string on 15
+C's slide count is 3
+A's slide count is 2
+C's slide count is 3
+A's slide count is 2
+B's slide count is 0
+B's slide count is 0
+CACABB is found at input string on 18
+C's slide count is 4
+A's slide count is 0
+B's slide count is 1
+B's slide count is 1
+A's slide count is 0
+CABBA is found at input string on 20

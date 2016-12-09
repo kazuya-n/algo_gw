@@ -3,11 +3,11 @@
 #include <string.h>
 
 //とりあえずTの最大文字数は100
-#define MAX_T 100
+#define MAX_T 500000
 //とりあえずSiの最大文字数は10
-#define MAX_S 10
+#define MAX_S 150
 //とりあえずSiの個数は10個
-#define MAX_S_N 10
+#define MAX_S_N 60000
 
 char T [MAX_T];
 char S [MAX_S];
@@ -68,9 +68,9 @@ int BM(void){
     i=j=S_len-1;
     while((i<T_len)&&(j>=0)){
        //デバッグ
-       printf("checking T - %c: S - %c \n",T[i],S[j]);
+       //printf("checking T - %c: S - %c \n",T[i],S[j]);
        //同じかどうか
-       if(T[i]!=S[j]||T[i]!='x'){
+       if(T[i]!=S[j]&&T[i]!='x'){
            //まずループ防止チェック
            //基本的にはずらし幅に対応する文字をテーブルから探す。
            remain = S_len - j;
@@ -86,7 +86,7 @@ int BM(void){
        }
     }
     //見つかったらテキストの場所を返す。
-    if(j<0) return i;
+    if(j<0) return i+1;
     //見つからなかったら-1を返す。
     return -1;
 }

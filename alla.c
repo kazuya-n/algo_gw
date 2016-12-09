@@ -1,8 +1,14 @@
+/*
+ simply replace x to a
+ Usage : "./grpwk <data1_in >data1_out
+ */
+
 #include<stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #define MAX 500000
+
 int main_prg(int, char**);
 
 int main(int argc, char** argv){
@@ -29,20 +35,7 @@ int main_prg(int argc, char** argv){
   int i;
   int ran;
   for(i=0;i<MAX;i++){
-      if(input[i]=='x'){
-          ran=rand()%3;
-          switch (ran){
-              case 0:
-                input[i]='a';
-                break;
-              case 1:
-                input[i]='b';
-                break;
-              case 2:
-                input[i]='c';
-                break;
-        }
-      }
+      if(input[i]=='x') input[i] = 'a';
       putchar(input[i]);
   }
   return (0);
