@@ -98,20 +98,32 @@ int BM(void){
     int BM_table[MAX_S];
     //iはTの何文字目かを指し示し、jはSの何文字目かを指し示す。
     int i,j;
+    int maxj;
+    int xcount=0;
+    int maxx=0;
+    int returnable=-1;
     //ループ防止用変数
     int remain;
     BMinit(BM_table,S_len);
     //比較スタート
     //パターンSの末尾に検索位置を合わせる。
     i=j=S_len-1;
-    while((i<T_len)&&(j>=0)){
+    while(i<T_len){
         //デバッグ
         //printf("checking T - %c: S - %c \n",T[i],S[j]);
         //1文字ずつ比較するところ
         //xだったら無視して同じだった扱いにする。
-        if(T[i]!=S[j]&&T[i]!='x'){
+        if((T[i]!=S[j]&&T[i]!='x')||j<0){
             //まずループ防止チェック
             //基本的にはずらし幅に対応する文字をテーブルから探す。
+            if(T[i]=='x') xcount++;
+            if(j<0){
+                if(xcount<maxx){
+                    j++;
+                    returnable=++i;
+                    maxx=xcount;
+                }
+            }
             remain = S_len - j;
             if(BM_table[(int)T[i]]>remain){
                 i += BM_table[(int)T[i]];
@@ -124,10 +136,11 @@ int BM(void){
             j--;
         }
     }
-    //見つかったらテキストの場所を返す。
+    /*見つかったらテキストの場所を返す。
     if(j<0) return i+1;
+    */
     //見つからなかったら-1を返す。
-    return -1;
+    return returnable;
 }
 
 
