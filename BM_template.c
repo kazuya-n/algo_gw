@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <stdlib.h>
@@ -18,12 +18,16 @@
 char T [MAX_T];
 //部分文字列
 char S [MAX_S];
+//部分文字列の入力を取る
+char S_inp[MAX_S_N][MAX_S];
 //Tの長さ
 int T_len;
 //BM法で探索する関数
 int BM (void);
 //BM法におけるずらし幅を決める関数
 void BMinit(int *table,int  len);
+//クイックソート用1
+int compare_s(const void *a, const void *b);
 
 
 int main_prg(int, char**);
@@ -47,15 +51,18 @@ int main(int argc, char** argv){
 }
 
 int main_prg(int argc, char** argv){
-    int i,j;
+    int i,j,k;
     int index=0;
     //Tを読み込み
     scanf("%s",T);
     T_len = strlen(T);
     //Sを回数分読み込み
     //検索し結果を出力
-    for(i=0;i<MAX_S_N;i++){
-        scanf("%s",S);
+    while(scanf("%s",S_inp[k++])!=EOF);
+    qsort(S_inp, k, sizeof(S_inp[0]), compare_s);
+    for(i=0;i<45000;i++){
+        //scanf("%s",S);
+        strcpy(S,S_inp[i]);
         index = BM();
         if(index != -1){
             //printf("%s is found at input string on %d\n",S,index);
@@ -144,3 +151,9 @@ int BM(void){
 }
 
 
+int compare_s(const void *a, const void *b)
+{
+    char *aa=(char*)a;
+    char *bb=(char*)b;
+    return strlen(bb)-strlen(aa);
+}
