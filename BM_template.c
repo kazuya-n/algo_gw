@@ -60,7 +60,7 @@ int main_prg(int argc, char** argv){
     //検索し結果を出力
     while(scanf("%s",S_inp[k++])!=EOF);
     qsort(S_inp, k, sizeof(S_inp[0]), compare_s);
-    for(i=0;i<45000;i++){
+    for(i=0;i<k;i++){
         //scanf("%s",S);
         strcpy(S,S_inp[i]);
         index = BM();
@@ -114,27 +114,14 @@ int BM(void){
     //比較スタート
     //パターンSの末尾に検索位置を合わせる。
     i=j=S_len-1;
-    xcount=0;
-    xmin=100000;
-    returnable=-1;
-    while(i<T_len){
+    while(i<T_len&&j>=0){
         //デバッグ
         //printf("checking T - %c: S - %c \n",T[i],S[j]);
         //1文字ずつ比較するところ
         //xだったら無視して同じだった扱いにする。
-        if((T[i] != S[j] && T[i] != 'x') || j<0  ){
+        if(T[i] != S[j] && T[i] != 'x'){
             //まずループ防止チェック
             //基本的にはずらし幅に対応する文字をテーブルから探す。
-            if(j<0){
-                if(xcount<=xmin){
-                    if(xcount==0){
-                        return -1;
-                    }
-                    xmin=xcount;
-                    xcount=0;
-                    returnable=i+1;
-                }
-            }
             remain = S_len - j;
             if(BM_table[(int)T[i]]>remain){
                 i += BM_table[(int)T[i]];
@@ -150,7 +137,8 @@ int BM(void){
     }
     //見つかったらテキストの場所を返す。
     //見つからなかったら-1を返す。
-    return returnable;
+    if(j<0) return i+1;
+    return -1;
 }
 
 
