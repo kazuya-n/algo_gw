@@ -17,9 +17,10 @@ int main(void){
         total++;
     }
     printf("total count is %d\n",total);
+    printf("S's length,number\n");
     for(i=0;i<500000;i++){
         if(count[i]==0)continue;
-        printf("S[ %d ] 's count is %d\n",i,count[i]);
+        printf("%d,%d\n",i,count[i]);
     }
     return 0;
 }

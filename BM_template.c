@@ -60,7 +60,7 @@ int main_prg(int argc, char** argv){
     //検索し結果を出力
     while(scanf("%s",S_inp[k++])!=EOF);
     qsort(S_inp, k, sizeof(S_inp[0]), compare_s);
-    for(i=0;i<45000;i++){
+    for(i=0;i<k;i++){
         //scanf("%s",S);
         strcpy(S,S_inp[i]);
         index = BM();
