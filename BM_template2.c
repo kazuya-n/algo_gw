@@ -77,7 +77,7 @@ int main_prg(int argc, char** argv){
     for(i=0;i<MAX_T;i++){
         if(T[i]=='x') T[i] = 'a';
     }
-    printf("%s\n",T);
+    printf("%.500000s\n",T);
     return 0;
 }
 
@@ -105,21 +105,18 @@ int BM(void){
     int BM_table[MAX_S];
     //iはTの何文字目かを指し示し、jはSの何文字目かを指し示す。
     int i,j;
-    int xcount;
-    int xmin;
-    int returnable;
     //ループ防止用変数
     int remain;
     BMinit(BM_table,S_len);
     //比較スタート
     //パターンSの末尾に検索位置を合わせる。
     i=j=S_len-1;
-    while(i<T_len && j>=0){
+    while((i<T_len)&&(j>=0)){
         //デバッグ
         //printf("checking T - %c: S - %c \n",T[i],S[j]);
         //1文字ずつ比較するところ
         //xだったら無視して同じだった扱いにする。
-        if(T[i] != S[j] && T[i] != 'x'){
+        if(T[i]!=S[j]&&T[i]!='x'){
             //まずループ防止チェック
             //基本的にはずらし幅に対応する文字をテーブルから探す。
             remain = S_len - j;
@@ -135,9 +132,9 @@ int BM(void){
         }
     }
     //見つかったらテキストの場所を返す。
-    //見つからなかったら-1を返す。
     if(j<0) return i+1;
-    else return -1;
+    //見つからなかったら-1を返す。
+    return -1;
 }
 
 
