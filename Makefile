@@ -1,2 +1,2 @@
-grpwk : BM_template2.c
-	gcc -o grpwk -O2 BM_template2.c 
+grpwk : Submit.c
+	gcc -o grpwk -O2 Submit.c 
